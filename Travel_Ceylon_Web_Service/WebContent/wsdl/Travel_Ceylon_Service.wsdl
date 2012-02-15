@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://DefaultNamespace" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://DefaultNamespace" xmlns:intf="http://DefaultNamespace" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://DefaultNamespace" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="connectToDB">
+    <complexType/>
+   </element>
+   <element name="connectToDBResponse">
+    <complexType/>
+   </element>
+   <element name="getLongitude_Im_Place">
+    <complexType>
+     <sequence>
+      <element name="place" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getLongitude_Im_PlaceResponse">
+    <complexType>
+     <sequence>
+      <element name="getLongitude_Im_PlaceReturn" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDescription_Im_Place">
+    <complexType>
+     <sequence>
+      <element name="place" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDescription_Im_PlaceResponse">
+    <complexType>
+     <sequence>
+      <element name="getDescription_Im_PlaceReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getCategory_Im_Place">
+    <complexType>
+     <sequence>
+      <element name="place" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getCategory_Im_PlaceResponse">
+    <complexType>
+     <sequence>
+      <element name="getCategory_Im_PlaceReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getLatitude_Im_Place">
+    <complexType>
+     <sequence>
+      <element name="place" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getLatitude_Im_PlaceResponse">
+    <complexType>
+     <sequence>
+      <element name="getLatitude_Im_PlaceReturn" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getLatitude_City">
+    <complexType>
+     <sequence>
+      <element name="city" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getLatitude_CityResponse">
+    <complexType>
+     <sequence>
+      <element name="getLatitude_CityReturn" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getLongitude_City">
+    <complexType>
+     <sequence>
+      <element name="city" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getLongitude_CityResponse">
+    <complexType>
+     <sequence>
+      <element name="getLongitude_CityReturn" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getLatitude_CityRequest">
+
+      <wsdl:part element="impl:getLatitude_City" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLatitude_Im_PlaceResponse">
+
+      <wsdl:part element="impl:getLatitude_Im_PlaceResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCategory_Im_PlaceResponse">
+
+      <wsdl:part element="impl:getCategory_Im_PlaceResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLatitude_Im_PlaceRequest">
+
+      <wsdl:part element="impl:getLatitude_Im_Place" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCategory_Im_PlaceRequest">
+
+      <wsdl:part element="impl:getCategory_Im_Place" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDescription_Im_PlaceRequest">
+
+      <wsdl:part element="impl:getDescription_Im_Place" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="connectToDBRequest">
+
+      <wsdl:part element="impl:connectToDB" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDescription_Im_PlaceResponse">
+
+      <wsdl:part element="impl:getDescription_Im_PlaceResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLatitude_CityResponse">
+
+      <wsdl:part element="impl:getLatitude_CityResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLongitude_Im_PlaceResponse">
+
+      <wsdl:part element="impl:getLongitude_Im_PlaceResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLongitude_Im_PlaceRequest">
+
+      <wsdl:part element="impl:getLongitude_Im_Place" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLongitude_CityRequest">
+
+      <wsdl:part element="impl:getLongitude_City" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLongitude_CityResponse">
+
+      <wsdl:part element="impl:getLongitude_CityResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="connectToDBResponse">
+
+      <wsdl:part element="impl:connectToDBResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Travel_Ceylon_Service">
+
+      <wsdl:operation name="connectToDB">
+
+         <wsdl:input message="impl:connectToDBRequest" name="connectToDBRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:connectToDBResponse" name="connectToDBResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLongitude_Im_Place">
+
+         <wsdl:input message="impl:getLongitude_Im_PlaceRequest" name="getLongitude_Im_PlaceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getLongitude_Im_PlaceResponse" name="getLongitude_Im_PlaceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDescription_Im_Place">
+
+         <wsdl:input message="impl:getDescription_Im_PlaceRequest" name="getDescription_Im_PlaceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getDescription_Im_PlaceResponse" name="getDescription_Im_PlaceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCategory_Im_Place">
+
+         <wsdl:input message="impl:getCategory_Im_PlaceRequest" name="getCategory_Im_PlaceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getCategory_Im_PlaceResponse" name="getCategory_Im_PlaceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLatitude_Im_Place">
+
+         <wsdl:input message="impl:getLatitude_Im_PlaceRequest" name="getLatitude_Im_PlaceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getLatitude_Im_PlaceResponse" name="getLatitude_Im_PlaceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLatitude_City">
+
+         <wsdl:input message="impl:getLatitude_CityRequest" name="getLatitude_CityRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getLatitude_CityResponse" name="getLatitude_CityResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLongitude_City">
+
+         <wsdl:input message="impl:getLongitude_CityRequest" name="getLongitude_CityRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getLongitude_CityResponse" name="getLongitude_CityResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="Travel_Ceylon_ServiceSoapBinding" type="impl:Travel_Ceylon_Service">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="connectToDB">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="connectToDBRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="connectToDBResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLongitude_Im_Place">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getLongitude_Im_PlaceRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getLongitude_Im_PlaceResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDescription_Im_Place">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDescription_Im_PlaceRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDescription_Im_PlaceResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCategory_Im_Place">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCategory_Im_PlaceRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCategory_Im_PlaceResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLatitude_Im_Place">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getLatitude_Im_PlaceRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getLatitude_Im_PlaceResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLatitude_City">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getLatitude_CityRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getLatitude_CityResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLongitude_City">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getLongitude_CityRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getLongitude_CityResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="Travel_Ceylon_ServiceService">
+
+      <wsdl:port binding="impl:Travel_Ceylon_ServiceSoapBinding" name="Travel_Ceylon_Service">
+
+         <wsdlsoap:address location="http://localhost:8080/Travel_Ceylon_Web_Service/services/Travel_Ceylon_Service"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
