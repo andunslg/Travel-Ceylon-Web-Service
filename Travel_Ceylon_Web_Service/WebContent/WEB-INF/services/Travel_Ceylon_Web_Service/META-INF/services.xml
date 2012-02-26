@@ -1,4 +1,4 @@
-<service name="Travel_Ceylon_Service" >
+<service name="Travel_Ceylon_Web_Service" >
 	<Description>
 		Please Type your service description here
 	</Description>
@@ -6,5 +6,5 @@
 		<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only" class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
 		<messageReceiver  mep="http://www.w3.org/2004/08/wsdl/in-out"  class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</messageReceivers>
-	<parameter name="ServiceClass" locked="false">Travel_Ceylon_Service</parameter>
+	<parameter name="ServiceClass" locked="false">org.web.travel_ceylon.ws.Travel_Ceylon_Web_Service</parameter>
 </service>
