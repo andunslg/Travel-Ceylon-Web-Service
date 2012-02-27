@@ -180,4 +180,8 @@ public class Travel_Ceylon_Web_Service {
 		}
 		return cityList;
 	}
+	public String planTheTrip(String startC,String desC,String duration,String interests ) {
+		System.out.println(startC+desC+duration+interests);
+		return "";
+	}
 }
