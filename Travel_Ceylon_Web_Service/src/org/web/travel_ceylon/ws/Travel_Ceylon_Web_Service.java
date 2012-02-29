@@ -182,6 +182,6 @@ public class Travel_Ceylon_Web_Service {
 	}
 	public String planTheTrip(String startC,String desC,String duration,String interests ) {
 		System.out.println(startC+desC+duration+interests);
-		return "";
+		return "Colombo:6.93408:79.8502:Gangaramya Temple|Buddhisum,History,Religon|A Big Temple in Colombo|6.91625|79.8563#Viharamahadevia Park|Lesuire|Park|6.91379|79.8626;Kalutara:6.58385:79.9611;Ambalangoda:6.2367:80.0544;Galle:6.03276:80.2157:Galle Fort|History|A fortress build by Dutches|6.02948|80.2161#Kottawa Jungle|Nature|A tropical rain forest|6.10147|80.3183;Weligama:5.97369:80.4294:Agrabhodi Raja Maha Viharaya|Religon - Buddhisum,History|A aention temple.|5.97132|80.4196;";
 	}
 }
