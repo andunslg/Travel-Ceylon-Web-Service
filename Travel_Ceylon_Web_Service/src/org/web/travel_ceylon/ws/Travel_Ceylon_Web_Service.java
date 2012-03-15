@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-
-
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
@@ -184,18 +182,36 @@ public class Travel_Ceylon_Web_Service {
 		}
 		return cityList;
 	}
-	public String planTheTrip(String startC,String desC,String duration,String interests ) {
-		Hashtable<String, City> city_table=new Hashtable<String,City>();
+
+	public String planTheTrip(String startC, String desC, String duration,
+			String interests, String shouldInclude, String shouldAvoid) {
+		ArrayList<String> interestList = new ArrayList<String>();
+		ArrayList<String> shouldIcludeCities = new ArrayList<String>();
+		ArrayList<String> shouldAvoidCities = new ArrayList<String>();
+
+		for (String interest : interests.split(";")) {
+			interestList.add(interest);
+		}
+		for (String city : shouldInclude.split(";")) {
+			shouldIcludeCities.add(city);
+		}
+		for (String city : shouldAvoid.split(";")) {
+			shouldAvoidCities.add(city);
+		}
+
+		Hashtable<String, City> city_table = new Hashtable<String, City>();
 		ArrayList<City> cities = new ArrayList<City>();
 		ArrayList<Road> roads = new ArrayList<Road>();
-		int cityCount=0;
-		
-		String city_list[]=getCityList().split(";");
-		for(String city : city_list){
-				City t=new City(cityCount, city);
+		int cityCount = 0;
+
+		String city_list[] = getCityList().split(";");
+		for (String city : city_list) {
+			if (!shouldAvoidCities.contains(city)) {
+				City t = new City(cityCount, city);
 				cities.add(t);
 				city_table.put(city, t);
 				cityCount++;
+			}
 		}
 
 		connectToDB();
@@ -205,22 +221,25 @@ public class Travel_Ceylon_Web_Service {
 			System.out.println(query);
 			ResultSet resultSet = stmt.executeQuery(query);
 			while (resultSet.next()) {
-				String from=resultSet.getString("from");
-				String to=resultSet.getString("to");
-				int dis=resultSet.getInt("distance");
-				Road t=new Road(city_table.get(from),city_table.get(to),dis);
-				roads.add(t);
-				t=new Road(city_table.get(to),city_table.get(from),dis);
-				roads.add(t);
-				
+				String from = resultSet.getString("from");
+				String to = resultSet.getString("to");
+				int dis = resultSet.getInt("distance");
+				if (!shouldAvoidCities.contains(from)
+						&& !shouldAvoidCities.contains(to)) {
+					Road t = new Road(city_table.get(from), city_table.get(to),
+							dis);
+					roads.add(t);
+					t = new Road(city_table.get(to), city_table.get(from), dis);
+					roads.add(t);
+				}
+
 			}
 		} catch (SQLException s) {
 			System.out.println("SQL statement is not executed! :" + s);
 		}
 
-
 		Trip_Plan tp = new Trip_Plan();
-		tp.calcShortestPaths(cities,roads);
+		tp.calcShortestPaths(cities, roads);
 		for (int k = 0; k < cities.size(); k++) {
 			for (int i = 0; i < cities.size(); i++) {
 				System.out.print(tp.DistanceArray[k][i] + ",");
@@ -239,12 +258,32 @@ public class Travel_Ceylon_Web_Service {
 			}
 			System.out.println();
 		}
-		ArrayList<City> path = tp.getShortestPath(cities.get(0), cities.get(6));
-		for (int k = 0; k < path.size(); k++) {
-			System.out.println(path.get(k).name);
+		if (shouldIcludeCities.equals("")) {
+			ArrayList<City> path = tp.getShortestPath(city_table.get(startC),
+					city_table.get(desC));
+			for (int k = 0; k < path.size(); k++) {
+				System.out.println(path.get(k).name);
+			}
+		} else {
+			ArrayList<City> path = tp.getShortestPath(city_table.get(startC),
+					city_table.get(shouldIcludeCities.get(0)));
+			if (shouldIcludeCities.size() > 1) {
+				for (int i = 0; i < shouldIcludeCities.size(); i++) {
+					path.addAll(tp.getShortestPath(
+							city_table.get(shouldIcludeCities.get(i)),
+							city_table.get(shouldIcludeCities.get(i + 1))));
+				}
+			}
+			path.addAll(tp.getShortestPath(
+					city_table.get(shouldIcludeCities.get(shouldIcludeCities.size()-1)),
+					city_table.get(desC)));
+			for (int k = 0; k < path.size(); k++) {
+				System.out.println(path.get(k).name);
+			}
 		}
-		
-		System.out.println(startC+desC+duration+interests);
+
+		System.out.println(startC + desC + duration + interests + shouldInclude
+				+ shouldAvoid);
 		return "Colombo:6.93408:79.8502:Gangaramya Temple|Buddhisum,History,Religon|A Big Temple in Colombo|6.91625|79.8563#Viharamahadevia Park|Lesuire|Park|6.91379|79.8626;Kalutara:6.58385:79.9611;Ambalangoda:6.2367:80.0544;Galle:6.03276:80.2157:Galle Fort|History|A fortress build by Dutches|6.02948|80.2161#Kottawa Jungle|Nature|A tropical rain forest|6.10147|80.3183;Weligama:5.97369:80.4294:Agrabhodi Raja Maha Viharaya|Religon - Buddhisum,History|A aention temple.|5.97132|80.4196;";
 	}
 }
