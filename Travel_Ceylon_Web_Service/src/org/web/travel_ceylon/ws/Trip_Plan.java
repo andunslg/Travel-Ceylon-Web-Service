@@ -17,6 +17,18 @@ public class Trip_Plan {
 	   this.roads=roads;
 	   
        DistanceArray = initializeMap(cities, roads);
+     //Printing For Checking//////////////////////////////////////
+       for (int k = 0; k < cities.size(); k++) {
+			for (int i = 0; i < cities.size(); i++) {
+				System.out.print(DistanceArray[k][i] + ",");
+			}
+			System.out.println();
+       }
+       
+       System.out.println();
+       System.out.println();
+     //Printing For Checking//////////////////////////////////////
+       
        Ancestor = new City[cities.size()][cities.size()];
 
        for(int k=0; k<cities.size(); k++){

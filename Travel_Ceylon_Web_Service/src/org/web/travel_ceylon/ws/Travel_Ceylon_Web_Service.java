@@ -13,7 +13,8 @@ public class Travel_Ceylon_Web_Service {
 	private String url;
 	private Connection con;
 	private Statement stmt;
-
+	private String tripPath;
+	
 	public void connectToDB() {
 		url = "jdbc:mysql://localhost:3306/travel_ceylon";
 		try {
@@ -240,6 +241,8 @@ public class Travel_Ceylon_Web_Service {
 
 		Trip_Plan tp = new Trip_Plan();
 		tp.calcShortestPaths(cities, roads);
+		
+		//Printing For Checking//////////////////////////////////////
 		for (int k = 0; k < cities.size(); k++) {
 			for (int i = 0; i < cities.size(); i++) {
 				System.out.print(tp.DistanceArray[k][i] + ",");
@@ -258,17 +261,60 @@ public class Travel_Ceylon_Web_Service {
 			}
 			System.out.println();
 		}
-		if (shouldIcludeCities.equals("")) {
+		////////////////////////////////////////////////////////////
+		
+		
+		if (shouldInclude.equals("")) {
 			ArrayList<City> path = tp.getShortestPath(city_table.get(startC),
 					city_table.get(desC));
-			for (int k = 0; k < path.size(); k++) {
-				System.out.println(path.get(k).name);
+			ArrayList<Integer> finalPath=new ArrayList<Integer>();
+			for(City ct :path){
+				if(!finalPath.contains(ct.name)){
+					finalPath.add(ct.name);
+				}
 			}
+			tripPath="";
+			
+			for (int k = 0; k < finalPath.size(); k++) {
+				System.out.println(cities.get(finalPath.get(k)).cityName);
+				String cName=cities.get(finalPath.get(k)).cityName;
+				String lng=Float.toString(getLongitude_City(cName));
+				String lat=Float.toString(getLatitude_City(cName));
+				tripPath+=cName+":"+lat+":"+lng+":";
+				
+				connectToDB();
+				String place = "";
+				String cat="";
+				try {
+					stmt = (Statement) con.createStatement();
+					ResultSet rs = stmt
+							.executeQuery("SELECT Place_Name FROM close_to WHERE City_Name='"
+									+ cName + "'");
+					while (rs.next()) {
+						place= rs.getString("Place_Name");
+						cat=getCategory_Im_Place(place);
+						String arr[]=cat.split(",");
+						for(String ct:arr){
+							if(interestList.contains(ct)){
+								tripPath+=place+"|"+cat+"|"+getDescription_Im_Place(place)+"|"+getLatitude_Im_Place(place)+"|"+getLongitude_Im_Place(place)+"#";
+							}
+						}
+						
+					}
+					
+				} catch (SQLException e) {
+					System.out.println("Error - Unable to get places close to " + cName
+							+ " :" + e);
+				}
+				tripPath+=";";
+			}
+			System.out.println(tripPath);
+			
 		} else {
 			ArrayList<City> path = tp.getShortestPath(city_table.get(startC),
 					city_table.get(shouldIcludeCities.get(0)));
 			if (shouldIcludeCities.size() > 1) {
-				for (int i = 0; i < shouldIcludeCities.size(); i++) {
+				for (int i = 0; i < shouldIcludeCities.size()-1; i++) {
 					path.addAll(tp.getShortestPath(
 							city_table.get(shouldIcludeCities.get(i)),
 							city_table.get(shouldIcludeCities.get(i + 1))));
@@ -277,13 +323,54 @@ public class Travel_Ceylon_Web_Service {
 			path.addAll(tp.getShortestPath(
 					city_table.get(shouldIcludeCities.get(shouldIcludeCities.size()-1)),
 					city_table.get(desC)));
-			for (int k = 0; k < path.size(); k++) {
-				System.out.println(path.get(k).name);
+			
+			ArrayList<Integer> finalPath=new ArrayList<Integer>();
+			for(City ct :path){
+				if(!finalPath.contains(ct.name)){
+					finalPath.add(ct.name);
+				}
 			}
+			tripPath="";
+			
+			for (int k = 0; k < finalPath.size(); k++) {
+				System.out.println(cities.get(finalPath.get(k)).cityName);
+				String cName=cities.get(finalPath.get(k)).cityName;
+				String lng=Float.toString(getLongitude_City(cName));
+				String lat=Float.toString(getLatitude_City(cName));
+				tripPath+=cName+":"+lat+":"+lng+":";
+				
+				connectToDB();
+				String place = "";
+				String cat="";
+				try {
+					stmt = (Statement) con.createStatement();
+					ResultSet rs = stmt
+							.executeQuery("SELECT Place_Name FROM close_to WHERE City_Name='"
+									+ cName + "'");
+					while (rs.next()) {
+						place= rs.getString("Place_Name");
+						cat=getCategory_Im_Place(place);
+						String arr[]=cat.split(",");
+						for(String ct:arr){
+							if(interestList.contains(ct)){
+								tripPath+=place+"|"+cat+"|"+getDescription_Im_Place(place)+"|"+getLatitude_Im_Place(place)+"|"+getLongitude_Im_Place(place)+"#";
+							}
+						}
+						
+					}
+					
+				} catch (SQLException e) {
+					System.out.println("Error - Unable to get places close to " + cName
+							+ " :" + e);
+				}
+				tripPath+=";";
+			}
+			System.out.println(tripPath);
 		}
 
 		System.out.println(startC + desC + duration + interests + shouldInclude
 				+ shouldAvoid);
-		return "Colombo:6.93408:79.8502:Gangaramya Temple|Buddhisum,History,Religon|A Big Temple in Colombo|6.91625|79.8563#Viharamahadevia Park|Lesuire|Park|6.91379|79.8626;Kalutara:6.58385:79.9611;Ambalangoda:6.2367:80.0544;Galle:6.03276:80.2157:Galle Fort|History|A fortress build by Dutches|6.02948|80.2161#Kottawa Jungle|Nature|A tropical rain forest|6.10147|80.3183;Weligama:5.97369:80.4294:Agrabhodi Raja Maha Viharaya|Religon - Buddhisum,History|A aention temple.|5.97132|80.4196;";
+		//return "Colombo:6.93408:79.8502:Gangaramya Temple|Buddhisum,History,Religon|A Big Temple in Colombo|6.91625|79.8563#Viharamahadevia Park|Lesuire|Park|6.91379|79.8626;Kalutara:6.58385:79.9611;Ambalangoda:6.2367:80.0544;Galle:6.03276:80.2157:Galle Fort|History|A fortress build by Dutches|6.02948|80.2161#Kottawa Jungle|Nature|A tropical rain forest|6.10147|80.3183;Weligama:5.97369:80.4294:Agrabhodi Raja Maha Viharaya|Religon - Buddhisum,History|A aention temple.|5.97132|80.4196;";
+		return tripPath;
 	}
 }
