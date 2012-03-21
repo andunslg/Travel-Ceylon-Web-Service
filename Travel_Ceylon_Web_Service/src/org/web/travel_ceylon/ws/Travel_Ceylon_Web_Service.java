@@ -39,6 +39,12 @@ public class Travel_Ceylon_Web_Service {
 		} catch (SQLException e) {
 			System.out.println("Error - Unable to get Categories :" + e);
 		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return catList;
 	}
 
@@ -55,6 +61,12 @@ public class Travel_Ceylon_Web_Service {
 		} catch (SQLException e) {
 			System.out.println("Error - Unable to get longitude of " + city
 					+ " :" + e);
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return lngt;
 	}
@@ -73,6 +85,12 @@ public class Travel_Ceylon_Web_Service {
 			System.out.println("Error - Unable to get latitude of " + city
 					+ " :" + e);
 		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return latt;
 	}
 
@@ -89,6 +107,12 @@ public class Travel_Ceylon_Web_Service {
 		} catch (SQLException e) {
 			System.out.println("Error - Unable to get longitude of " + place
 					+ " :" + e);
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return lngt;
 	}
@@ -107,6 +131,12 @@ public class Travel_Ceylon_Web_Service {
 			System.out.println("Error - Unable to get latitude of " + place
 					+ " :" + e);
 		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return latt;
 	}
 
@@ -124,6 +154,12 @@ public class Travel_Ceylon_Web_Service {
 			System.out.println("Error - Unable to get 	Category of " + place
 					+ " :" + e);
 		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return cat;
 	}
 
@@ -140,6 +176,12 @@ public class Travel_Ceylon_Web_Service {
 		} catch (SQLException e) {
 			System.out.println("Error - Unable to get Description of " + place
 					+ " :" + e);
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return des;
 	}
@@ -159,9 +201,21 @@ public class Travel_Ceylon_Web_Service {
 					+ city + "','" + Float.parseFloat(dis) + "')";
 			System.out.println(query);
 			val = stmt.executeUpdate(query);
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return true;
 		} catch (SQLException s) {
 			System.out.println("SQL statement is not executed! :" + s);
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return false;
 		}
 
@@ -180,6 +234,12 @@ public class Travel_Ceylon_Web_Service {
 			}
 		} catch (SQLException s) {
 			System.out.println("SQL statement is not executed! :" + s);
+		}
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return cityList;
 	}
@@ -425,6 +485,12 @@ public class Travel_Ceylon_Web_Service {
 				+ shouldAvoid);
 		// return
 		// "Colombo:6.93408:79.8502:Gangaramya Temple|Buddhisum,History,Religon|A Big Temple in Colombo|6.91625|79.8563#Viharamahadevia Park|Lesuire|Park|6.91379|79.8626;Kalutara:6.58385:79.9611;Ambalangoda:6.2367:80.0544;Galle:6.03276:80.2157:Galle Fort|History|A fortress build by Dutches|6.02948|80.2161#Kottawa Jungle|Nature|A tropical rain forest|6.10147|80.3183;Weligama:5.97369:80.4294:Agrabhodi Raja Maha Viharaya|Religon - Buddhisum,History|A aention temple.|5.97132|80.4196;";
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return tripPath;
 	}
 }
