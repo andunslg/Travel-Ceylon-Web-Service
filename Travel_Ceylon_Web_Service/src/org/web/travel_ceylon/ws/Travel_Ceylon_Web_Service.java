@@ -557,8 +557,7 @@ public class Travel_Ceylon_Web_Service {
 				}
 				tripPath += ";";
 			}
-			System.out.println(startC + desC + duration + interests + shouldInclude
-					+ shouldAvoid);
+			
 			System.out.println(tripPath);
 		}
 
@@ -568,6 +567,8 @@ public class Travel_Ceylon_Web_Service {
 			System.out.println("Cant close the dtabse Connection.class" + e);
 			e.printStackTrace();
 		}
+		System.out.println(startC + desC + duration + interests + shouldInclude
+				+ shouldAvoid+observing);
 		return tripPath;
 	}
 }
