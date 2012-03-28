@@ -13,8 +13,12 @@ public class Travel_Ceylon_Web_Service {
 	private String url;
 	private Connection con;
 	private Statement stmt;
-	private String tripPath;
+	private String tripPath = "";
 
+	/**
+	 * This connectToDB() method initialize the connection to the SQL database
+	 * which holds the City data.
+	 */
 	public void connectToDB() {
 		url = "jdbc:mysql://localhost:3306/travel_ceylon";
 		try {
@@ -26,6 +30,11 @@ public class Travel_Ceylon_Web_Service {
 		}
 	}
 
+	/**
+	 * This getCategories() method will return a string which contains all the
+	 * important place categories considered in the Travel Ceylon. The returning
+	 * string will have list of categories separate by a ";"
+	 */
 	public String getCategories() {
 		connectToDB();
 		String catList = "";
@@ -48,6 +57,10 @@ public class Travel_Ceylon_Web_Service {
 		return catList;
 	}
 
+	/**
+	 * This getLongitude_City(String city) method will return a longitude of a
+	 * city.
+	 */
 	public float getLongitude_City(String city) {
 		connectToDB();
 		float lngt = 0;
@@ -71,6 +84,10 @@ public class Travel_Ceylon_Web_Service {
 		return lngt;
 	}
 
+	/**
+	 * This getLatitude_City(String city) method will return a latitude of a
+	 * city.
+	 */
 	public float getLatitude_City(String city) {
 		connectToDB();
 		float latt = 0;
@@ -94,6 +111,10 @@ public class Travel_Ceylon_Web_Service {
 		return latt;
 	}
 
+	/**
+	 * This getLongitude_Im_Place(String place) method will return a longitude
+	 * of a important place.
+	 */
 	public float getLongitude_Im_Place(String place) {
 		connectToDB();
 		float lngt = 0;
@@ -117,6 +138,10 @@ public class Travel_Ceylon_Web_Service {
 		return lngt;
 	}
 
+	/**
+	 * This getLatitude_Im_Place(String place) method will return a latitude of
+	 * a important place.
+	 */
 	public float getLatitude_Im_Place(String place) {
 		connectToDB();
 		float latt = 0;
@@ -140,6 +165,10 @@ public class Travel_Ceylon_Web_Service {
 		return latt;
 	}
 
+	/**
+	 * This getCategory_Im_Place(String place) method will return a category of
+	 * a important place.
+	 */
 	public String getCategory_Im_Place(String place) {
 		connectToDB();
 		String cat = "";
@@ -163,6 +192,10 @@ public class Travel_Ceylon_Web_Service {
 		return cat;
 	}
 
+	/**
+	 * This getDescription_Im_Place(String place) method will return a
+	 * description of a important place.
+	 */
 	public String getDescription_Im_Place(String place) {
 		connectToDB();
 		String des = "";
@@ -186,6 +219,13 @@ public class Travel_Ceylon_Web_Service {
 		return des;
 	}
 
+	/**
+	 * This insertImportantPlace(String placeName, String longitude,String
+	 * latitude, String des, String cat, String city, String dis) method is used
+	 * to, insert a new important place to the Travel Ceylon Database. The
+	 * method caller will specify the, Place Name Longitude Latitude Categories
+	 * The nearest city A description This data will be sent to approval.
+	 */
 	public boolean insertImportantPlace(String placeName, String longitude,
 			String latitude, String des, String cat, String city, String dis) {
 		connectToDB();
@@ -244,9 +284,40 @@ public class Travel_Ceylon_Web_Service {
 		return cityList;
 	}
 
+	/**
+	 * This method is the most important method of this class This is used to
+	 * calculate Trip Plans Following parameters are used to send the trip
+	 * details
+	 * 
+	 * @param startC
+	 *            = Can't be ""
+	 * @param desC
+	 *            = Can't be ""
+	 * @param duration
+	 *            = Can't be ""
+	 * @param interests
+	 *            = Can't be "", The list of interests in the Trip, List is set
+	 *            of interests separated by ";"
+	 * @param shouldInclude
+	 *            = Can be "", This is a set of cities have to be included in
+	 *            the trip plan. List is set of cities separated by ";"
+	 * @param shouldAvoid
+	 *            = Can be "", This is a set of cities have to be avoided in the
+	 *            trip plan. List is set of cities separated by ";"
+	 * @param observing
+	 *            = Can't be "", This is a set of cities which will be used to
+	 *            observe places, other cities in the trip plan will be
+	 *            considered as just passing cities. List is set of cities
+	 *            separated by ";"
+	 * @return
+	 */
 	public String planTheTrip(String startC, String desC, String duration,
 			String interests, String shouldInclude, String shouldAvoid,
 			String observing) {
+
+		System.out.println(startC + desC + duration + interests + shouldInclude
+				+ shouldAvoid);
+
 		ArrayList<String> interestList = new ArrayList<String>();
 		ArrayList<String> shouldIcludeCities = new ArrayList<String>();
 		ArrayList<String> shouldAvoidCities = new ArrayList<String>();
@@ -272,7 +343,8 @@ public class Travel_Ceylon_Web_Service {
 
 		String city_list[] = getCityList().split(";");
 		for (String city : city_list) {
-			if (!shouldAvoidCities.contains(city)) {
+			if (!shouldAvoidCities.contains(city)) {// Use to remove should
+													// avoid cities.
 				City t = new City(cityCount, city);
 				cities.add(t);
 				city_table.put(city, t);
@@ -280,6 +352,7 @@ public class Travel_Ceylon_Web_Service {
 			}
 		}
 
+		// This will build the graph of cities in the Travel Ceylon Database.
 		connectToDB();
 		try {
 			stmt = (Statement) con.createStatement();
@@ -302,12 +375,16 @@ public class Travel_Ceylon_Web_Service {
 			}
 		} catch (SQLException s) {
 			System.out.println("SQL statement is not executed! :" + s);
+			tripPath = "";
+			return tripPath;
 		}
+		// ///////////////////////////////////////////////////////////////////
 
+		// Trip Planner object is created ////////////////////////////////////
 		Trip_Plan tp = new Trip_Plan();
 		tp.calcShortestPaths(cities, roads);
 
-		// Printing For Checking//////////////////////////////////////
+		// Printing For Checking/////////////////////////////////////////////
 		for (int k = 0; k < cities.size(); k++) {
 			for (int i = 0; i < cities.size(); i++) {
 				System.out.print(tp.DistanceArray[k][i] + ",");
@@ -326,8 +403,9 @@ public class Travel_Ceylon_Web_Service {
 			}
 			System.out.println();
 		}
-		// //////////////////////////////////////////////////////////
+		// ///////////////////////////////////////////////////////////////////
 
+		// This if will run if there are no specific included cities.////////
 		if (shouldInclude.equals("")) {
 			ArrayList<City> path = tp.getShortestPath(city_table.get(startC),
 					city_table.get(desC));
@@ -372,12 +450,16 @@ public class Travel_Ceylon_Web_Service {
 				} catch (SQLException e) {
 					System.out.println("Error - Unable to get places close to "
 							+ cName + " :" + e);
+					tripPath = "";
+					return tripPath;
 				}
 				tripPath += ";";
 			}
 			System.out.println(tripPath);
 
-		} else {
+		}
+		// This if will run if there are specific included cities.////////////
+		else {
 			ArrayList<City> path = tp.getShortestPath(city_table.get(startC),
 					city_table.get(shouldIcludeCities.get(0)));
 			if (shouldIcludeCities.size() > 1) {
@@ -405,6 +487,7 @@ public class Travel_Ceylon_Web_Service {
 				String lat = Float.toString(getLatitude_City(cName));
 				tripPath += cName + ":" + lat + ":" + lng + ":";
 
+				// This if will run if there are no specific observing cities.////////
 				if (!observing.equals("")) {
 
 					if (observingCities.contains(cName)) {
@@ -413,9 +496,7 @@ public class Travel_Ceylon_Web_Service {
 						String cat = "";
 						try {
 							stmt = (Statement) con.createStatement();
-							ResultSet rs = stmt
-									.executeQuery("SELECT Place_Name FROM close_to WHERE City_Name='"
-											+ cName + "'");
+							ResultSet rs = stmt.executeQuery("SELECT Place_Name FROM close_to WHERE City_Name='"+ cName + "'");
 							while (rs.next()) {
 								place = rs.getString("Place_Name");
 								cat = getCategory_Im_Place(place);
@@ -438,9 +519,9 @@ public class Travel_Ceylon_Web_Service {
 							}
 
 						} catch (SQLException e) {
-							System.out
-									.println("Error - Unable to get places close to "
-											+ cName + " :" + e);
+							System.out.println("Error - Unable to get places close to "+ cName + " :" + e);
+							tripPath = "";
+							return tripPath;
 						}
 					}
 
@@ -450,9 +531,7 @@ public class Travel_Ceylon_Web_Service {
 					String cat = "";
 					try {
 						stmt = (Statement) con.createStatement();
-						ResultSet rs = stmt
-								.executeQuery("SELECT Place_Name FROM close_to WHERE City_Name='"
-										+ cName + "'");
+						ResultSet rs = stmt.executeQuery("SELECT Place_Name FROM close_to WHERE City_Name='"+ cName + "'");
 						while (rs.next()) {
 							place = rs.getString("Place_Name");
 							cat = getCategory_Im_Place(place);
@@ -471,9 +550,9 @@ public class Travel_Ceylon_Web_Service {
 						}
 
 					} catch (SQLException e) {
-						System.out
-								.println("Error - Unable to get places close to "
-										+ cName + " :" + e);
+						System.out.println("Error - Unable to get places close to "+ cName + " :" + e);
+						tripPath = "";
+						return tripPath;
 					}
 				}
 				tripPath += ";";
@@ -481,14 +560,10 @@ public class Travel_Ceylon_Web_Service {
 			System.out.println(tripPath);
 		}
 
-		System.out.println(startC + desC + duration + interests + shouldInclude
-				+ shouldAvoid);
-		// return
-		// "Colombo:6.93408:79.8502:Gangaramya Temple|Buddhisum,History,Religon|A Big Temple in Colombo|6.91625|79.8563#Viharamahadevia Park|Lesuire|Park|6.91379|79.8626;Kalutara:6.58385:79.9611;Ambalangoda:6.2367:80.0544;Galle:6.03276:80.2157:Galle Fort|History|A fortress build by Dutches|6.02948|80.2161#Kottawa Jungle|Nature|A tropical rain forest|6.10147|80.3183;Weligama:5.97369:80.4294:Agrabhodi Raja Maha Viharaya|Religon - Buddhisum,History|A aention temple.|5.97132|80.4196;";
 		try {
 			con.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Cant close the dtabse Connection.class" + e);
 			e.printStackTrace();
 		}
 		return tripPath;
