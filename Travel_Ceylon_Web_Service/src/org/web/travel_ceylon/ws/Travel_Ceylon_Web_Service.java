@@ -557,6 +557,8 @@ public class Travel_Ceylon_Web_Service {
 				}
 				tripPath += ";";
 			}
+			System.out.println(startC + desC + duration + interests + shouldInclude
+					+ shouldAvoid);
 			System.out.println(tripPath);
 		}
 
